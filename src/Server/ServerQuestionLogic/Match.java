@@ -27,7 +27,6 @@ public class Match {
             outputp1.writeObject("WELCOME " + player1.getName());
             outputp2.writeObject("WELCOME " + player2.getName());
 
-
             outputp1.writeObject(q);
             outputp1.flush();
             outputp2.writeObject(q);

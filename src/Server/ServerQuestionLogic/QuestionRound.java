@@ -1,5 +1,7 @@
 package Server.ServerQuestionLogic;
 
+import Server.Question;
+
 import java.io.Serializable;
 
 public class QuestionRound implements Serializable {

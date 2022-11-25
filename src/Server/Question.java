@@ -8,7 +8,7 @@ public class Question implements Serializable {
     int correctAnswerindex;
     String[] answers;
     boolean taken;
-
+//HEJSVEJ
     Question(String d, String[] a, int c){
         this.description = d;
         this.answers = a;

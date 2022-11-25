@@ -1,5 +1,7 @@
 package Server.ServerQuestionLogic;
 
+import Server.Categories;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
