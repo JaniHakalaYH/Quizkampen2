@@ -32,7 +32,7 @@ public class QuizFrames extends JFrame implements ActionListener {
 
 
     public QuizFrames(){
-        setSize(300,500);
+        setSize(300,300);
         setVisible(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -43,19 +43,18 @@ public class QuizFrames extends JFrame implements ActionListener {
     public void startFrame(){
         startPanel = new JPanel();
         JPanel namnPanel = new JPanel();
-        namnPanel.setLayout(new GridLayout(1,2));
+        namnPanel.setLayout(new GridLayout(1,3));
         changeName.addActionListener(this);
         add(startPanel);
         startPanel.setLayout(new BorderLayout());
-        startPanel.add(label1, BorderLayout.NORTH);
+        startPanel.add(namnPanel, BorderLayout.NORTH);
+        namnPanel.add(label1);
         namnPanel.add(label2);
         namnPanel.add(changeName);
-        startPanel.add(namnPanel, BorderLayout.CENTER);
         startPanel.add(startbutton, BorderLayout.SOUTH);
 
 
-        label1.setText("Välkommen till Quizkampen!");
-        label1.setFont(new Font("Dialog", Font.BOLD, 14));
+        label1.setText("    Välkommen!");
         label2.setText("Skriv ditt namn:");
 
         changeName.addActionListener(this);
@@ -113,17 +112,16 @@ public class QuizFrames extends JFrame implements ActionListener {
         scorePanel = new JPanel();
         JPanel panel4 = new JPanel();
         add(scorePanel);
-        JLabel name1 = new JLabel("Namn1");
-        JLabel name2 = new JLabel("Namn 2");
-        score1 = new JLabel("0");
-        score2 = new JLabel("0");
+        JLabel name1 = new JLabel("Namn 1: ");
+        JLabel name2 = new JLabel("Namn 2: ");
+        score1 = new JLabel(0 + " poäng" + "     ");
+        score2 = new JLabel(0 + " poäng");
         scorePanel.setLayout(new BorderLayout());
-        panel4.setLayout(new GridLayout(2,2));
-        scorePanel.add(panel4, BorderLayout.CENTER);
+        scorePanel.add(panel4);
         scorePanel.add(label1, BorderLayout.NORTH);
         panel4.add(name1);
-        panel4.add(name2);
         panel4.add(score1);
+        panel4.add(name2);
         panel4.add(score2);
 
         label1.setText("Score"); //går inte att köra metoden utan denna rad, lite skumt
