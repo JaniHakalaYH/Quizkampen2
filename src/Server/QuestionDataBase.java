@@ -17,11 +17,11 @@ public class QuestionDataBase {
     HashMap<String, ArrayList<Question>> db = new HashMap<>();
     int numberOfQuestions;
 
-    /*public QuestionsDataBase(Path p)
+    public QuestionDataBase(Path p)
     {
         this.db = loadDataBase(p);
         this.numberOfQuestions = 0;
-    }*/
+    }
 
     private HashMap<String, ArrayList<Question>> loadDataBase(Path p)
     {

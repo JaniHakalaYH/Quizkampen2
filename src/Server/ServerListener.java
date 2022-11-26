@@ -10,8 +10,8 @@ public class ServerListener {
         int port = 55553;
         try (ServerSocket serverSocket = new ServerSocket(port);){
             while(true) {
-                Player player1 = new Player("player 1", serverSocket.accept());
-                Player player2 = new Player("player 2", serverSocket.accept());
+                Player player1 = new Player("Player 1", serverSocket.accept());
+                Player player2 = new Player("Player 2", serverSocket.accept());
                 new Match(player1, player2);
             }
 

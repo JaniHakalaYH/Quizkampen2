@@ -6,27 +6,23 @@ import java.io.Serializable;
 
 public class QuestionRound implements Serializable {
     Question question;
-    int result;
 
-    QuestionRound(Question question){
+    QuestionRound(Question question) {
         this.question = question;
-        this.result = 0;
     }
 
-    public void checkResult(){
-        if (result == question.getCorrectAnswerindex()){
-            setResult(1);
+    public Question getQuestion() {
+        return question;
+    }
+
+    public boolean checkResult(String answer) {
+        if (answer.equals(question.getAnswers()[question.getCorrectAnswerindex()])){
+            return true;
+
+        } else {
+            return false;
         }
-        else {
-            setResult(-1);
-        }
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
-    public int getResult() {
-        return result;
     }
 }
+
+

@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class QuizFrames extends JFrame implements ActionListener {
     JPanel categoryPanel;
@@ -24,9 +28,13 @@ public class QuizFrames extends JFrame implements ActionListener {
     JButton svar4 = new JButton("Svar");
     JLabel score1;
     JLabel score2;
-    JTextField changeName = new JTextField("");
+    ObjectOutputStream output;
+    ObjectInputStream input;
+    String categoryChoice;
 
-    public QuizFrames(){
+    public QuizFrames(ObjectOutputStream output, ObjectInputStream input){
+        this.output = output;
+        this.input = input;
         setSize(300,300);
         setVisible(true);
         setLocationRelativeTo(null);
@@ -106,10 +114,13 @@ public class QuizFrames extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == changeName) {
-            System.out.println(changeName.getText());
-        }
-        else if (e.getSource() == category1) {
+        if (e.getSource() == category1) {
+            categoryChoice = category1.getText();
+            try {
+                output.writeObject(categoryChoice);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             remove(categoryPanel);
             questionFrame();
         }
