@@ -1,7 +1,6 @@
 package Server.ServerQuestionLogic;
 
 import Server.Player;
-import Server.Question;
 import Server.QuestionDataBase;
 
 import java.io.IOException;
@@ -17,7 +16,6 @@ public class Match {
         //Skickande av data mellan server och clients
         Path p = Paths.get("src/Server/Questions.txt");
         QuestionDataBase d = new QuestionDataBase(p);
-        //Question q = d.getRandomQuestionFromCategory("Sport");
 
         try (
                 ObjectOutputStream outputp1 = new ObjectOutputStream(player1.getSocket().getOutputStream());
@@ -25,21 +23,29 @@ public class Match {
                 ObjectOutputStream outputp2 = new ObjectOutputStream(player2.getSocket().getOutputStream());
                 ObjectInputStream inputp2 = new ObjectInputStream(player2.getSocket().getInputStream())) {
 
-            outputp1.writeBoolean(player1.isFirstPlayer()); //skriver till client om den är första spelaren
-            outputp2.writeBoolean(player2.isFirstPlayer());
-
             outputp1.writeObject("WELCOME " + player1.getName());
             outputp2.writeObject("WELCOME " + player2.getName());
 
             while (true) {
+
                 if (checkRemainingCategories()) {
-                    //output.writeObject(match.getCategoryAmount());
-                    outputp1.writeObject("Choose category");
-                    String category = (String) inputp1.readObject();
+                    outputp1.writeBoolean(player1.isCurrentPlayer()); //skriver till client om den är första spelaren
+                    outputp2.writeBoolean(player2.isCurrentPlayer());
+
+                    String category = "";
+
+                    if (player1.isCurrentPlayer()){
+                        outputp1.writeObject("Choose category");
+                        category = (String) inputp1.readObject();
+                    }
+                    else if (player2.isCurrentPlayer()) {
+                        outputp2.writeObject("Choose category");
+                        category = (String) inputp2.readObject();
+                    }
+
                     System.out.println(category); //skriver ut kategorin
 
                     CategoryRound categoryRound = createCategoryRound(category);
-                    //output.writeObject(categoryRound.getQuestionsPerCategory());
                     ArrayList<QuestionRound> rounds = categoryRound.getRounds();
 
                     for (QuestionRound round : rounds) {
@@ -51,17 +57,22 @@ public class Match {
                         boolean p2Right = round.checkResult(answer2); //har person 2 rätt?
                         scoreUpdater(p1Right, p2Right);
                     }
+                    System.out.println("klar med kategori 1");
                     categoriesLeft--;
+                    player1.setCurrentPlayer(false); //byter currentPlayer, detta måste utvecklas
+                    player2.setCurrentPlayer(true);
                 } else {
                     System.out.println("Player 1 Score: " + getPlayer1Score());
                     System.out.println("Player 2 Score: " + getPlayer2Score());
                     break;
                 }
             }
+            outputp1.writeObject("Your score: " + getPlayer1Score() + "\nPlayer 2 Score: " + getPlayer2Score());
+            outputp2.writeObject("Your score: " + getPlayer2Score() + "\nPlayer 1 Score: " + getPlayer1Score());
             } catch(IOException e){
                 throw new RuntimeException(e);
-            }}
-
+            }
+    }
     private int player1Score = 0;
     private int player2Score = 0;
 

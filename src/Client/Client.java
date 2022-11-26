@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 
 public class Client extends JFrame implements ActionListener {
@@ -58,39 +59,34 @@ public class Client extends JFrame implements ActionListener {
             input = new ObjectInputStream(socket.getInputStream());
             userInput = new BufferedReader(new InputStreamReader(System.in));
 
-            boolean isFirstPlayer = input.readBoolean(); //läser in om client är first player
-
             String fromserver = (String) input.readObject();
             System.out.println(fromserver);
 
-
-            //int categoryAmount = (int) input.readObject();
             for (int i = 0; i < 2; i++) {
-                if(isFirstPlayer){
+                boolean isCurrentPlayer = input.readBoolean();
+
+                if(isCurrentPlayer){
                     System.out.println(input.readObject()); //frågar om kategori
                     String categoryChoice = userInput.readLine();
                     output.writeObject(categoryChoice);
                 }
-                //int questionAmount = (int) input.readObject();
                 for (int j = 0; j < 2; j++) {
                     QuestionRound round = (QuestionRound) input.readObject();
-                    //System.out.println(round.getQuestion().getDescription());
-                    System.out.println("frågan");
+                    System.out.println(round.getQuestion().getDescription());
                     String answer = userInput.readLine();
                     output.writeObject(answer); //en sträng
                 }
             }
+            System.out.println(input.readObject());
         } catch (
                 ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static void main(String[] args) throws IOException {
         Client c = new Client();
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startbutton) {
