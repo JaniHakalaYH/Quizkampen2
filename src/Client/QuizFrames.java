@@ -8,13 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class QuizFrames extends JFrame implements ActionListener {
-    JPanel startPanel;
     JPanel categoryPanel;
     JPanel questionPanel;
     JPanel scorePanel;
     JLabel label1 = new JLabel();
-    JLabel label2 = new JLabel();
-    JButton startbutton = new JButton("Starta spel");
     JButton category1 = new JButton("category");
     JButton category2 = new JButton("category");
     JButton category3 = new JButton("category");
@@ -28,8 +25,6 @@ public class QuizFrames extends JFrame implements ActionListener {
     JLabel score1;
     JLabel score2;
     JTextField changeName = new JTextField("");
-    String name = changeName.getText();
-
 
     public QuizFrames(){
         setSize(300,300);
@@ -38,30 +33,6 @@ public class QuizFrames extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-
-
-    public void startFrame(){
-        startPanel = new JPanel();
-        JPanel namnPanel = new JPanel();
-        namnPanel.setLayout(new GridLayout(1,3));
-        changeName.addActionListener(this);
-        add(startPanel);
-        startPanel.setLayout(new BorderLayout());
-        startPanel.add(namnPanel, BorderLayout.NORTH);
-        namnPanel.add(label1);
-        namnPanel.add(label2);
-        namnPanel.add(changeName);
-        startPanel.add(startbutton, BorderLayout.SOUTH);
-
-
-        label1.setText("    Välkommen!");
-        label2.setText("Skriv ditt namn:");
-
-        changeName.addActionListener(this);
-        startbutton.addActionListener(this);
-
-
-    }
     public void categoryFrame(){
         categoryPanel = new JPanel();
         JPanel gridWithCategories = new JPanel();
@@ -127,20 +98,16 @@ public class QuizFrames extends JFrame implements ActionListener {
         label1.setText("Score"); //går inte att köra metoden utan denna rad, lite skumt
     }
 
-    public static void main(String[] args){
+    /*public static void main(String[] args){
 
         QuizFrames f = new QuizFrames();
         f.startFrame();
-    }
+    }*/
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == changeName) {
             System.out.println(changeName.getText());
-        }
-        else if (e.getSource() == startbutton) {
-            remove(startPanel);
-            categoryFrame();
         }
         else if (e.getSource() == category1) {
             remove(categoryPanel);
