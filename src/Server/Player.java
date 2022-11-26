@@ -1,5 +1,6 @@
 package Server;
 
+import java.io.Serializable;
 import java.net.Socket;
 
 public class Player {
@@ -12,11 +13,11 @@ public class Player {
         return socket;
     }
 
-    public Player(String n, Socket socket){
+    public Player(String n, Socket socket, Boolean isFirstPlayer){
         this.socket = socket;
         this.name = n;
         this.points = 0;
-        this.isFirstPlayer = true;
+        this.isFirstPlayer = isFirstPlayer();
     }
 
     public String getName()

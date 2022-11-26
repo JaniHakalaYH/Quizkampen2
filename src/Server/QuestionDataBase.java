@@ -41,6 +41,9 @@ public class QuestionDataBase {
                 if ((tempLine = br.readLine()) != null)
                 {
                     alternatives = tempLine.split(",");
+                    for(int i = 0; i < alternatives.length; i++){
+                        alternatives[i] = alternatives[i].trim();
+                }
                 }
                 // går till nästa rad och hämtar index till rätt svar
                 if ((tempLine = br.readLine()) != null)

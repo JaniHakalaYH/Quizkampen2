@@ -25,23 +25,18 @@ public class Match {
                 ObjectOutputStream outputp2 = new ObjectOutputStream(player2.getSocket().getOutputStream());
                 ObjectInputStream inputp2 = new ObjectInputStream(player2.getSocket().getInputStream())) {
 
+            outputp1.writeBoolean(player1.isFirstPlayer()); //skriver till client om den är första spelaren
+            outputp2.writeBoolean(player2.isFirstPlayer());
+
             outputp1.writeObject("WELCOME " + player1.getName());
             outputp2.writeObject("WELCOME " + player2.getName());
 
-            //outputp1.writeObject(q);
-            //outputp1.flush();
-            //outputp2.writeObject(q);
-            //outputp2.flush();
-            outputp1.writeObject("testar");
-            outputp2.writeObject("testar2");
             while (true) {
                 if (checkRemainingCategories()) {
                     //output.writeObject(match.getCategoryAmount());
                     outputp1.writeObject("Choose category");
-                    outputp2.writeObject("Your opponent chooses category (write \"ok\")");
                     String category = (String) inputp1.readObject();
                     System.out.println(category); //skriver ut kategorin
-                    inputp2.readObject(); //läser in ok från client2 utan att använda det till nåt
 
                     CategoryRound categoryRound = createCategoryRound(category);
                     //output.writeObject(categoryRound.getQuestionsPerCategory());
@@ -65,8 +60,7 @@ public class Match {
             }
             } catch(IOException e){
                 throw new RuntimeException(e);
-            }
-        }
+            }}
 
     private int player1Score = 0;
     private int player2Score = 0;
@@ -84,10 +78,6 @@ public class Match {
     public void scoreUpdater(boolean player1scored, boolean player2scored){
         if (player1scored) {
             setPlayer1Score(getPlayer1Score() + 1);
-
-        }
-        else {
-            setPlayer1Score(5);
         }
         if (player2scored) {
             setPlayer2Score(getPlayer2Score() + 1);

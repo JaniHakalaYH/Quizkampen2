@@ -1,5 +1,6 @@
 package Client;
 
+import Server.Player;
 import Server.ServerQuestionLogic.QuestionRound;
 
 import javax.swing.*;
@@ -57,42 +58,27 @@ public class Client extends JFrame implements ActionListener {
             input = new ObjectInputStream(socket.getInputStream());
             userInput = new BufferedReader(new InputStreamReader(System.in));
 
+            boolean isFirstPlayer = input.readBoolean(); //läser in om client är first player
 
-            String fromserver = "";
-            fromserver = input.readObject().toString();
+            String fromserver = (String) input.readObject();
             System.out.println(fromserver);
-            System.out.println(input.readObject()); //test
 
 
             //int categoryAmount = (int) input.readObject();
             for (int i = 0; i < 2; i++) {
-                System.out.println(input.readObject()); //frågar om kategori
-                String categoryChoice = userInput.readLine();
-                output.writeObject(categoryChoice);
+                if(isFirstPlayer){
+                    System.out.println(input.readObject()); //frågar om kategori
+                    String categoryChoice = userInput.readLine();
+                    output.writeObject(categoryChoice);
+                }
                 //int questionAmount = (int) input.readObject();
                 for (int j = 0; j < 2; j++) {
                     QuestionRound round = (QuestionRound) input.readObject();
-                    System.out.println(round.getQuestion().getDescription());
+                    //System.out.println(round.getQuestion().getDescription());
+                    System.out.println("frågan");
                     String answer = userInput.readLine();
                     output.writeObject(answer); //en sträng
                 }
-
-                String name = JOptionPane.showInputDialog("Skriv ditt namn: ");
-                output.writeObject(name);
-                Object object = input.readObject();
-                Server.Question question = (Server.Question) object;
-                String description = question.getDescription();
-                String[] answers = question.getAnswers();
-                int correctAnswerIndex = question.getCorrectAnswerindex();
-                System.out.println();
-                JOptionPane.showMessageDialog(null, "Frågan är: " + description + "\n" + "Svarsalternativ är: " + Arrays.toString(answers));
-                String inputString = JOptionPane.showInputDialog("Ange rätt svar: ");
-                if (Integer.parseInt(inputString) == correctAnswerIndex) {
-                    JOptionPane.showMessageDialog(null, "Bra, rätt svar.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "FEL! Rätt svar är: " + answers[correctAnswerIndex]);
-                }
-
             }
         } catch (
                 ClassNotFoundException e) {

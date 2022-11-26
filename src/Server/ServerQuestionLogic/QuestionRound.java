@@ -16,6 +16,7 @@ public class QuestionRound implements Serializable {
     }
 
     public boolean checkResult(String answer) {
+        System.out.println(question.getAnswers()[question.getCorrectAnswerindex()]);
         if (answer.equals(question.getAnswers()[question.getCorrectAnswerindex()])){
             return true;
 

@@ -16,12 +16,12 @@ public class QuizFrames extends JFrame implements ActionListener {
     JPanel questionPanel;
     JPanel scorePanel;
     JLabel label1 = new JLabel();
-    JButton category1 = new JButton("category");
-    JButton category2 = new JButton("category");
-    JButton category3 = new JButton("category");
-    JButton category4 = new JButton("category");
-    JButton category5 = new JButton("category");
-    JButton category6 = new JButton("category");
+    JButton category1 = new JButton("Food");
+    JButton category2 = new JButton("Sport");
+    JButton category3 = new JButton("Geography");
+    JButton category4 = new JButton("Animals");
+    JButton category5 = new JButton("Swedish History");
+    JButton category6 = new JButton("Music");
     JButton svar1 = new JButton("Svar");
     JButton svar2 = new JButton("Svar");
     JButton svar3 = new JButton("Svar");
@@ -106,27 +106,55 @@ public class QuizFrames extends JFrame implements ActionListener {
         label1.setText("Score"); //går inte att köra metoden utan denna rad, lite skumt
     }
 
-    /*public static void main(String[] args){
-
-        QuizFrames f = new QuizFrames();
-        f.startFrame();
-    }*/
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == category1) {
             categoryChoice = category1.getText();
-            try {
-                output.writeObject(categoryChoice);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            writeToServer(categoryChoice);
+            remove(categoryPanel);
+            questionFrame();
+        }
+        else if (e.getSource() == category2) {
+            categoryChoice = category2.getText();
+            writeToServer(categoryChoice);
+            remove(categoryPanel);
+            questionFrame();
+        }
+        else if (e.getSource() == category3) {
+            categoryChoice = category3.getText();
+            writeToServer(categoryChoice);
+            remove(categoryPanel);
+            questionFrame();
+        }
+        else if (e.getSource() == category4) {
+            categoryChoice = category4.getText();
+            writeToServer(categoryChoice);
+            remove(categoryPanel);
+            questionFrame();
+        }
+        else if (e.getSource() == category5) {
+            categoryChoice = category1.getText();
+            writeToServer(categoryChoice);
+            remove(categoryPanel);
+            questionFrame();
+        }
+        else if (e.getSource() == category6) {
+            categoryChoice = category6.getText();
+            writeToServer(categoryChoice);
             remove(categoryPanel);
             questionFrame();
         }
         else if (e.getSource() == svar1) {
             remove(questionPanel);
             scoreFrame();
+        }
+    }
+    public void writeToServer(Object o){
+        try {
+            output.writeObject(o);
+        } catch (Exception e){
+            System.out.println("Error");
+            e.printStackTrace();
         }
     }
 
