@@ -7,17 +7,17 @@ public class Player{
     Socket socket;
     String name;
     int points;
-    boolean currentPlayer;
+    String currentPlayer;
 
     public Socket getSocket() {
         return socket;
     }
 
-    public Player(String n, Socket socket, Boolean firstPlayer){
+    public Player(String n, Socket socket, String currentPlayer){
         this.socket = socket;
         this.name = n;
         this.points = 0;
-        this.currentPlayer = firstPlayer;
+        this.currentPlayer = currentPlayer;
     }
 
     public String getName()
@@ -40,12 +40,12 @@ public class Player{
         this.points = points;
     }
 
-    public boolean isCurrentPlayer()
+    public String isCurrentPlayer()
     {
         return currentPlayer;
     }
 
-    public void setCurrentPlayer(boolean cPlayer)
+    public void setCurrentPlayer(String cPlayer)
     {
         currentPlayer = cPlayer;
     }

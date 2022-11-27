@@ -29,16 +29,16 @@ public class Match {
             while (true) {
 
                 if (checkRemainingCategories()) {
-                    outputp1.writeBoolean(player1.isCurrentPlayer()); //skriver till client om den är första spelaren
-                    outputp2.writeBoolean(player2.isCurrentPlayer());
+                    outputp1.writeObject(player1.isCurrentPlayer()); //skriver till client om den är första spelaren
+                    outputp2.writeObject(player2.isCurrentPlayer());
 
                     String category = "";
 
-                    if (player1.isCurrentPlayer()){
+                    if (player1.isCurrentPlayer().equals("yes")){
                         outputp1.writeObject("Choose category");
                         category = (String) inputp1.readObject();
                     }
-                    else if (player2.isCurrentPlayer()) {
+                    else if (player2.isCurrentPlayer().equals("no")) {
                         outputp2.writeObject("Choose category");
                         category = (String) inputp2.readObject();
                     }
@@ -59,8 +59,8 @@ public class Match {
                     }
                     System.out.println("klar med kategori 1");
                     categoriesLeft--;
-                    player1.setCurrentPlayer(false); //byter currentPlayer, detta måste utvecklas
-                    player2.setCurrentPlayer(true);
+                    player1.setCurrentPlayer("no"); //byter currentPlayer, detta måste utvecklas
+                    player2.setCurrentPlayer("yes");
                 } else {
                     System.out.println("Player 1 Score: " + getPlayer1Score());
                     System.out.println("Player 2 Score: " + getPlayer2Score());

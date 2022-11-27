@@ -63,9 +63,11 @@ public class Client extends JFrame implements ActionListener {
             System.out.println(fromserver);
 
             for (int i = 0; i < 2; i++) {
-                boolean isCurrentPlayer = input.readBoolean();
+                System.out.println("boolean: ");
+                String isCurrentPlayer = (String) input.readObject();
+                System.out.println(isCurrentPlayer);
 
-                if(isCurrentPlayer){
+                if(isCurrentPlayer.equals("yes")){
                     System.out.println(input.readObject()); //frågar om kategori
                     String categoryChoice = userInput.readLine();
                     output.writeObject(categoryChoice);
