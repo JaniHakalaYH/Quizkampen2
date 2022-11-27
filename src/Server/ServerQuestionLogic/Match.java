@@ -25,8 +25,25 @@ public class Match {
 
             outputp1.writeObject("WELCOME " + player1.getName());
             outputp2.writeObject("WELCOME " + player2.getName());
+            outputp1.writeObject(player1.isCurrentPlayer()); //skriver om client är currentPlayer
+            outputp2.writeObject(player2.isCurrentPlayer());
+            String category = "";
+            if(player1.isCurrentPlayer().equals("yes")){
+                category = (String)inputp1.readObject(); //läser in kategorivalet
 
-            while (true) {
+            }
+            else if (player2.isCurrentPlayer().equals("yes")) {
+                category = (String) inputp2.readObject();
+            }
+            CategoryRound categoryRound = createCategoryRound(category);
+            ArrayList<QuestionRound> rounds = categoryRound.getRounds();
+
+            for (QuestionRound round : rounds) {
+                outputp1.writeObject(round);
+            }
+
+
+            /*while (true) {
 
                 if (checkRemainingCategories()) {
                     outputp1.writeObject(player1.isCurrentPlayer()); //skriver till client om den är första spelaren
@@ -68,7 +85,7 @@ public class Match {
                 }
             }
             outputp1.writeObject("Your score: " + getPlayer1Score() + "\nPlayer 2 Score: " + getPlayer2Score());
-            outputp2.writeObject("Your score: " + getPlayer2Score() + "\nPlayer 1 Score: " + getPlayer1Score());
+            outputp2.writeObject("Your score: " + getPlayer2Score() + "\nPlayer 1 Score: " + getPlayer1Score());*/
             } catch(IOException e){
                 throw new RuntimeException(e);
             }

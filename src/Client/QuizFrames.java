@@ -1,6 +1,7 @@
 package Client;
 
 import Server.Question;
+import Server.ServerQuestionLogic.QuestionRound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,7 +67,7 @@ public class QuizFrames extends JFrame implements ActionListener {
         category5.addActionListener(this);
         category6.addActionListener(this);
     }
-    public void questionFrame(){
+    public void questionFrame(QuestionRound questionRound){
         questionPanel = new JPanel();
         JPanel panel3 = new JPanel();
         add(questionPanel);
@@ -80,12 +81,18 @@ public class QuizFrames extends JFrame implements ActionListener {
         panel3.add(svar3);
         panel3.add(svar4);
 
+        svar1.setText(questionRound.getQuestion().getAnswers()[0]);
+        svar2.setText(questionRound.getQuestion().getAnswers()[1]);
+        svar3.setText(questionRound.getQuestion().getAnswers()[2]);
+        svar4.setText(questionRound.getQuestion().getAnswers()[3]);
         svar1.addActionListener(this);
         svar2.addActionListener(this);
         svar3.addActionListener(this);
         svar4.addActionListener(this);
 
-        label1.setText("Fråga");
+        label1.setText(questionRound.getQuestion().getDescription());
+
+
     }
     public void scoreFrame(){
         scorePanel = new JPanel();
@@ -111,38 +118,44 @@ public class QuizFrames extends JFrame implements ActionListener {
         if (e.getSource() == category1) {
             categoryChoice = category1.getText();
             writeToServer(categoryChoice);
+            QuestionRound q = (QuestionRound) readFromServer();
             remove(categoryPanel);
-            questionFrame();
+            questionFrame(q);
         }
         else if (e.getSource() == category2) {
             categoryChoice = category2.getText();
             writeToServer(categoryChoice);
+            QuestionRound q = (QuestionRound) readFromServer();
             remove(categoryPanel);
-            questionFrame();
+            questionFrame(q);
         }
         else if (e.getSource() == category3) {
             categoryChoice = category3.getText();
             writeToServer(categoryChoice);
+            QuestionRound q = (QuestionRound) readFromServer();
             remove(categoryPanel);
-            questionFrame();
+            questionFrame(q);
         }
         else if (e.getSource() == category4) {
             categoryChoice = category4.getText();
             writeToServer(categoryChoice);
+            QuestionRound q = (QuestionRound) readFromServer();
             remove(categoryPanel);
-            questionFrame();
+            questionFrame(q);
         }
         else if (e.getSource() == category5) {
             categoryChoice = category1.getText();
             writeToServer(categoryChoice);
+            QuestionRound q = (QuestionRound) readFromServer();
             remove(categoryPanel);
-            questionFrame();
+            questionFrame(q);
         }
         else if (e.getSource() == category6) {
             categoryChoice = category6.getText();
             writeToServer(categoryChoice);
+            QuestionRound q = (QuestionRound) readFromServer();
             remove(categoryPanel);
-            questionFrame();
+            questionFrame(q);
         }
         else if (e.getSource() == svar1) {
             remove(questionPanel);
@@ -156,6 +169,17 @@ public class QuizFrames extends JFrame implements ActionListener {
             System.out.println("Error");
             e.printStackTrace();
         }
+    }
+    public Object readFromServer() {
+        try {
+            Object o = input.readObject();
+            return o;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

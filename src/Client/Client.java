@@ -24,6 +24,7 @@ public class Client extends JFrame implements ActionListener {
     ObjectOutputStream output;
     ObjectInputStream input;
     BufferedReader userInput;
+    String isCurrentPlayer;
 
 
     public Client() throws IOException {
@@ -61,10 +62,11 @@ public class Client extends JFrame implements ActionListener {
 
             String fromserver = (String) input.readObject();
             System.out.println(fromserver);
+            isCurrentPlayer = (String) input.readObject();
 
-            for (int i = 0; i < 2; i++) {
+            /*for (int i = 0; i < 2; i++) {
                 System.out.println("boolean: ");
-                String isCurrentPlayer = (String) input.readObject();
+                isCurrentPlayer = (String) input.readObject();
                 System.out.println(isCurrentPlayer);
 
                 if(isCurrentPlayer.equals("yes")){
@@ -79,7 +81,7 @@ public class Client extends JFrame implements ActionListener {
                     output.writeObject(answer); //en sträng
                 }
             }
-            System.out.println(input.readObject());
+            System.out.println(input.readObject());*/
         } catch (
                 ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -91,10 +93,20 @@ public class Client extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        QuizFrames q = new QuizFrames(output, input);
         if (e.getSource() == startbutton) {
-            this.dispose();
-            QuizFrames q = new QuizFrames(output, input);
-            q.categoryFrame();
+            if(isCurrentPlayer.equals("yes")){
+                this.dispose();
+                q.categoryFrame();
+            }
+            else if (isCurrentPlayer.equals("no")){
+                this.dispose();
+                q.scoreFrame();
+            }
+            else {
+                System.out.println("FEL");
+                System.exit(1);
+            }
         } else if (e.getSource() == changeName) {
 
 
